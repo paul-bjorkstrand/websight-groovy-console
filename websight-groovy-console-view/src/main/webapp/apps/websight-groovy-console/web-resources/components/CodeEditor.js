@@ -122,6 +122,9 @@ export default class CodeEditor extends React.Component {
     }
 
     onGroovyCodeChange(editor, data, value) {
+        if (data.origin === 'paste' && editor.getSelection().replace(/(\r\n|\n|\r)/gm, ',') === data.text.toString()) {
+            editor.setCursor(data.to)
+        }
         if (!this.groovyCodeValueChangedProgramatically) {
             this.props.onScriptChange({ groovy: value, changed: true });
         } else {
